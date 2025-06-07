@@ -8,56 +8,76 @@ import { Link } from 'react-router-dom';
 
 const ForgotPassword = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      <div className="w-full max-w-md">
-        <div className="glass-card rounded-2xl p-8 shadow-2xl">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
-              <Mail className="w-8 h-8 text-white" />
-            </div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">Forgot Password?</h2>
-            <p className="text-gray-600">No worries, we'll send you reset instructions.</p>
+    <div className="min-h-screen flex">
+      {/* Left Side - Visual */}
+      <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-blue-900 via-purple-900 to-blue-800">
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div 
+          className="w-full bg-cover bg-center"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"
+          }}
+        ></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center text-white p-8">
+            <h1 className="text-4xl font-bold mb-4">Password Recovery</h1>
+            <p className="text-xl opacity-90">Secure and simple password reset for your legal consultations.</p>
           </div>
+        </div>
+      </div>
 
-          <form className="space-y-6">
-            {/* Email Input */}
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="pl-10 h-12 bg-white/50 border-white/20 focus:bg-white/80 transition-all"
-                />
+      {/* Right Side - Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+        <div className="w-full max-w-md">
+          <div className="glass-card rounded-2xl p-8 shadow-2xl">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
+                <Mail className="w-8 h-8 text-white" />
               </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">Forgot Password?</h2>
+              <p className="text-gray-600">No worries, we'll send you reset instructions.</p>
             </div>
 
-            {/* Info Text */}
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <p className="text-blue-700 text-sm">
-                We'll send a link to reset your password to this email address.
-              </p>
-            </div>
+            <form className="space-y-6">
+              {/* Email Input */}
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email address"
+                    className="pl-10 h-12 bg-white/50 border-white/20 focus:bg-white/80 transition-all"
+                  />
+                </div>
+              </div>
 
-            {/* Send Reset Link Button */}
-            <Button className="w-full h-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              Send Reset Link
-            </Button>
+              {/* Info Text */}
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <p className="text-blue-700 text-sm">
+                  We'll send a link to reset your password to this email address.
+                </p>
+              </div>
 
-            {/* Back to Login */}
-            <Link to="/login">
-              <Button
-                variant="ghost"
-                className="w-full h-12 text-gray-600 hover:text-gray-800 font-medium transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Login
+              {/* Send Reset Link Button */}
+              <Button className="w-full h-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                Send Reset Link
               </Button>
-            </Link>
-          </form>
+
+              {/* Back to Login */}
+              <Link to="/login">
+                <Button
+                  variant="ghost"
+                  className="w-full h-12 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Login
+                </Button>
+              </Link>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -39,8 +39,8 @@ const HowItWorks = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="relative">
-              <div className="bg-white/30 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center">
+            <div key={index} className="relative h-full">
+              <div className="bg-white/30 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center h-full flex flex-col">
                 <div className="bg-gradient-to-br from-blue-900 to-purple-900 text-white text-2xl font-bold w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                   {step.number}
                 </div>
@@ -49,7 +49,7 @@ const HowItWorks = () => {
                   {step.title}
                 </h3>
                 
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed flex-grow">
                   {step.description}
                 </p>
               </div>

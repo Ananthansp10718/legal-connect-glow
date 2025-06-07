@@ -17,7 +17,7 @@ const Login = () => {
         <div 
           className="w-full bg-cover bg-center"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"
+            backgroundImage: "url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"
           }}
         ></div>
         <div className="absolute inset-0 flex items-center justify-center">
