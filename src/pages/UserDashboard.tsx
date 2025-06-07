@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { 
   Bell, 
@@ -16,10 +15,19 @@ import {
   ArrowRight,
   Users,
   CheckCircle,
-  Upload
+  Upload,
+  ChevronDown
 } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const UserDashboard = () => {
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+
   const upcomingAppointments = [
     {
       id: 1,
@@ -80,17 +88,32 @@ const UserDashboard = () => {
               </button>
 
               {/* Profile Dropdown */}
-              <div className="relative">
-                <button className="flex items-center space-x-2 p-2 rounded-xl hover:bg-white/20 transition-colors">
-                  <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
-                    alt="Profile" 
-                    className="w-8 h-8 rounded-full"
-                  />
-                  <span className="hidden md:block text-gray-700 font-medium">Ananthan</span>
-                </button>
-                {/* Dropdown menu would go here */}
-              </div>
+              <DropdownMenu open={isProfileDropdownOpen} onOpenChange={setIsProfileDropdownOpen}>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center space-x-2 p-2 rounded-xl hover:bg-white/20 transition-colors">
+                    <img 
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
+                      alt="Profile" 
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <span className="hidden md:block text-gray-700 font-medium">Ananthan</span>
+                    <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  align="end" 
+                  className="w-48 bg-white/90 backdrop-blur-md border border-white/20 shadow-xl rounded-xl"
+                >
+                  <DropdownMenuItem className="flex items-center space-x-2 cursor-pointer hover:bg-white/50 rounded-lg">
+                    <User className="w-4 h-4 text-blue-600" />
+                    <span>My Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="flex items-center space-x-2 cursor-pointer hover:bg-white/50 rounded-lg text-red-600">
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
