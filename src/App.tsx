@@ -13,6 +13,10 @@ import OTPSuccess from "./pages/OTPSuccess";
 import ForgotPassword from "./pages/ForgotPassword";
 import PasswordReset from "./pages/PasswordReset";
 import UserDashboard from "./pages/UserDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import LawyerVerification from "./pages/LawyerVerification";
+import UsersListing from "./pages/UsersListing";
+import LawyersListing from "./pages/LawyersListing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +37,10 @@ const App = () => (
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/lawyer-verification" element={<LawyerVerification />} />
+          <Route path="/admin/users" element={<UsersListing />} />
+          <Route path="/admin/lawyers" element={<LawyersListing />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
