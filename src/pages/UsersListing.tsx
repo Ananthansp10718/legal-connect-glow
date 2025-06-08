@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Search, 
@@ -229,11 +228,11 @@ const UsersListing = () => {
           <Card className="bg-white border border-[#D9D9D9] rounded-xl shadow-sm mb-6">
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row gap-4 items-end">
-                <div className="flex-1">
+                <div className="flex-1 relative">
+                  <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-[#6E6E6E]" />
                   <Input
                     placeholder="Search by name or email..."
-                    className="border-[#D9D9D9] focus:border-[#007AFF]"
-                    icon={<Search className="h-4 w-4" />}
+                    className="border-[#D9D9D9] focus:border-[#007AFF] pl-10"
                   />
                 </div>
                 <div className="flex gap-3">

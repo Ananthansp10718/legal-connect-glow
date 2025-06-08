@@ -1,9 +1,11 @@
-
 import React, { useState } from 'react';
 import { 
   Search, 
   Shield, 
   ShieldOff,
+  CheckCircle,
+  XCircle,
+  Clock,
   Bell,
   Settings,
   LogOut,
@@ -17,9 +19,6 @@ import {
   DollarSign,
   User,
   MoreHorizontal,
-  CheckCircle,
-  Clock,
-  XCircle,
   Star
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -60,86 +59,78 @@ const LawyersListing = () => {
   const [selectedLawyer, setSelectedLawyer] = useState(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [actionType, setActionType] = useState('');
-  const [viewMode, setViewMode] = useState('table');
+  const [viewMode, setViewMode] = useState('table'); // 'table' or 'cards'
 
   const lawyers = [
     {
       id: 1,
       name: 'Dr. Emily Carter',
       email: 'emily.carter@email.com',
-      specializations: ['Corporate Law', 'Contract Law'],
+      phone: '+91 98765 43210',
+      registeredOn: '2024-11-15',
       verificationStatus: 'Verified',
       accountStatus: 'Active',
-      rating: 4.9,
-      totalCases: 156,
+      specializations: ['Corporate Law', 'Contract Law'],
       avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=64&h=64&fit=crop&crop=face',
-      registeredOn: '2024-08-15',
-      experience: '12 years'
+      rating: 4.9,
+      totalAppointments: 156,
+      experience: '8 years'
     },
     {
       id: 2,
       name: 'Robert Martinez',
       email: 'robert.martinez@email.com',
-      specializations: ['Criminal Law', 'Civil Rights'],
+      phone: '+91 87654 32109',
+      registeredOn: '2024-10-20',
       verificationStatus: 'Verified',
       accountStatus: 'Active',
-      rating: 4.8,
-      totalCases: 142,
+      specializations: ['Criminal Law', 'Civil Rights'],
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face',
-      registeredOn: '2024-07-20',
-      experience: '8 years'
+      rating: 4.8,
+      totalAppointments: 142,
+      experience: '12 years'
     },
     {
       id: 3,
       name: 'Dr. Lisa Anderson',
       email: 'lisa.anderson@email.com',
-      specializations: ['Family Law', 'Women Rights'],
+      phone: '+91 76543 21098',
+      registeredOn: '2024-12-01',
       verificationStatus: 'Pending',
       accountStatus: 'Active',
-      rating: 4.7,
-      totalCases: 128,
+      specializations: ['Family Law', 'Divorce Law'],
       avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=64&h=64&fit=crop&crop=face',
-      registeredOn: '2024-12-01',
-      experience: '15 years'
+      rating: 4.7,
+      totalAppointments: 89,
+      experience: '6 years'
     },
     {
       id: 4,
-      name: 'James Wilson',
-      email: 'james.wilson@email.com',
-      specializations: ['Tax Law', 'Business Law'],
+      name: 'Michael Thompson',
+      email: 'michael.thompson@email.com',
+      phone: '+91 65432 10987',
+      registeredOn: '2024-09-10',
       verificationStatus: 'Verified',
       accountStatus: 'Blocked',
-      rating: 4.2,
-      totalCases: 89,
+      specializations: ['Tax Law', 'Business Law'],
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face',
-      registeredOn: '2024-06-10',
+      rating: 4.6,
+      totalAppointments: 67,
       experience: '10 years'
     },
     {
       id: 5,
-      name: 'Dr. Sarah Khan',
-      email: 'sarah.khan@email.com',
-      specializations: ['Immigration Law', 'Human Rights'],
+      name: 'Dr. Priya Sharma',
+      email: 'priya.sharma@email.com',
+      phone: '+91 54321 09876',
+      registeredOn: '2024-08-15',
       verificationStatus: 'Rejected',
       accountStatus: 'Active',
-      rating: 4.5,
-      totalCases: 76,
+      specializations: ['Immigration Law', 'International Law'],
       avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&h=64&fit=crop&crop=face',
-      registeredOn: '2024-11-15',
-      experience: '6 years'
-    },
-    {
-      id: 6,
-      name: 'Michael Thompson',
-      email: 'michael.thompson@email.com',
-      specializations: ['Real Estate Law', 'Property Law'],
-      verificationStatus: 'Verified',
-      accountStatus: 'Active',
-      rating: 4.6,
-      totalCases: 203,
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop&crop=face',
-      registeredOn: '2024-05-22',
-      experience: '18 years'
+      rating: 4.3,
+      totalAppointments: 23,
+      experience: '4 years'
     }
   ];
 
@@ -167,7 +158,7 @@ const LawyersListing = () => {
     setActionType('');
   };
 
-  const getVerificationIcon = (status) => {
+  const getVerificationStatusIcon = (status) => {
     switch (status) {
       case 'Verified':
         return <CheckCircle className="h-4 w-4 text-[#28C76F]" />;
@@ -180,13 +171,17 @@ const LawyersListing = () => {
     }
   };
 
-  const getVerificationBadge = (status) => {
-    const colors = {
-      Verified: 'bg-[#28C76F] bg-opacity-10 text-[#28C76F]',
-      Pending: 'bg-[#FACC15] bg-opacity-10 text-[#FACC15]',
-      Rejected: 'bg-[#EA5455] bg-opacity-10 text-[#EA5455]'
-    };
-    return colors[status] || 'bg-gray-100 text-gray-600';
+  const getVerificationStatusColor = (status) => {
+    switch (status) {
+      case 'Verified':
+        return 'bg-[#28C76F] bg-opacity-10 text-[#28C76F]';
+      case 'Pending':
+        return 'bg-[#FACC15] bg-opacity-10 text-[#FACC15]';
+      case 'Rejected':
+        return 'bg-[#EA5455] bg-opacity-10 text-[#EA5455]';
+      default:
+        return 'bg-gray-100 text-gray-600';
+    }
   };
 
   return (
@@ -265,18 +260,18 @@ const LawyersListing = () => {
           {/* Header Section */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-[#2E2E2E] mb-2">Lawyers</h1>
-            <p className="text-[#6E6E6E]">Manage all registered legal professionals on the platform. Total: {lawyers.length} Lawyers</p>
+            <p className="text-[#6E6E6E]">Manage all registered legal professionals on the platform. Total: {lawyers.length}</p>
           </div>
 
           {/* Search & Filter Panel */}
           <Card className="bg-white border border-[#D9D9D9] rounded-xl shadow-sm mb-6">
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row gap-4 items-end">
-                <div className="flex-1">
+                <div className="flex-1 relative">
+                  <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-[#6E6E6E]" />
                   <Input
                     placeholder="Search by name, email, or specialization..."
-                    className="border-[#D9D9D9] focus:border-[#007AFF]"
-                    icon={<Search className="h-4 w-4" />}
+                    className="border-[#D9D9D9] focus:border-[#007AFF] pl-10"
                   />
                 </div>
                 <div className="flex gap-3">
@@ -285,11 +280,11 @@ const LawyersListing = () => {
                       <SelectValue placeholder="Specialization" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
                       <SelectItem value="corporate">Corporate Law</SelectItem>
                       <SelectItem value="criminal">Criminal Law</SelectItem>
                       <SelectItem value="family">Family Law</SelectItem>
                       <SelectItem value="tax">Tax Law</SelectItem>
+                      <SelectItem value="immigration">Immigration Law</SelectItem>
                     </SelectContent>
                   </Select>
                   <Select>
@@ -344,10 +339,10 @@ const LawyersListing = () => {
                   <TableHeader>
                     <TableRow className="border-b border-[#D9D9D9]">
                       <TableHead className="text-[#2E2E2E] font-semibold">Lawyer</TableHead>
-                      <TableHead className="text-[#2E2E2E] font-semibold">Specializations</TableHead>
+                      <TableHead className="text-[#2E2E2E] font-semibold">Contact</TableHead>
                       <TableHead className="text-[#2E2E2E] font-semibold">Verification</TableHead>
                       <TableHead className="text-[#2E2E2E] font-semibold">Account Status</TableHead>
-                      <TableHead className="text-[#2E2E2E] font-semibold">Rating</TableHead>
+                      <TableHead className="text-[#2E2E2E] font-semibold">Performance</TableHead>
                       <TableHead className="text-[#2E2E2E] font-semibold">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -363,31 +358,21 @@ const LawyersListing = () => {
                             />
                             <div>
                               <p className="text-[#2E2E2E] font-medium">{lawyer.name}</p>
-                              <p className="text-[#6E6E6E] text-sm">{lawyer.email}</p>
+                              <p className="text-[#6E6E6E] text-sm">{lawyer.experience} experience</p>
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div className="flex flex-wrap gap-1">
-                            {lawyer.specializations.slice(0, 2).map((spec, index) => (
-                              <span key={index} className="px-2 py-1 bg-[#2C7BE5] bg-opacity-10 text-[#2C7BE5] text-xs rounded-full">
-                                {spec}
-                              </span>
-                            ))}
-                            {lawyer.specializations.length > 2 && (
-                              <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-                                +{lawyer.specializations.length - 2}
-                              </span>
-                            )}
+                          <div className="text-sm">
+                            <p className="text-[#2E2E2E]">{lawyer.email}</p>
+                            <p className="text-[#6E6E6E]">{lawyer.phone}</p>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div className="flex items-center space-x-2">
-                            {getVerificationIcon(lawyer.verificationStatus)}
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getVerificationBadge(lawyer.verificationStatus)}`}>
-                              {lawyer.verificationStatus}
-                            </span>
-                          </div>
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center space-x-1 w-fit ${getVerificationStatusColor(lawyer.verificationStatus)}`}>
+                            {getVerificationStatusIcon(lawyer.verificationStatus)}
+                            <span>{lawyer.verificationStatus}</span>
+                          </span>
                         </TableCell>
                         <TableCell>
                           <span className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -399,10 +384,12 @@ const LawyersListing = () => {
                           </span>
                         </TableCell>
                         <TableCell>
-                          <div className="flex items-center space-x-1">
-                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                            <span className="text-[#2E2E2E] font-medium">{lawyer.rating}</span>
-                            <span className="text-[#6E6E6E] text-sm">({lawyer.totalCases})</span>
+                          <div className="text-sm">
+                            <div className="flex items-center space-x-1">
+                              <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                              <span className="text-[#2E2E2E] font-medium">{lawyer.rating}</span>
+                            </div>
+                            <p className="text-[#6E6E6E]">{lawyer.totalAppointments} appointments</p>
                           </div>
                         </TableCell>
                         <TableCell>
@@ -438,7 +425,7 @@ const LawyersListing = () => {
                 <Card key={lawyer.id} className="bg-white border border-[#D9D9D9] rounded-xl shadow-sm hover:shadow-md transition-shadow">
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-3">
                         <img 
                           src={lawyer.avatar} 
                           alt={lawyer.name}
@@ -446,50 +433,48 @@ const LawyersListing = () => {
                         />
                         <div>
                           <h3 className="text-[#2E2E2E] font-semibold">{lawyer.name}</h3>
-                          <p className="text-[#6E6E6E] text-sm">{lawyer.email}</p>
+                          <p className="text-[#6E6E6E] text-sm">{lawyer.experience} experience</p>
                           <div className="flex items-center space-x-1 mt-1">
-                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                            <Star className="h-3 w-3 text-yellow-500 fill-current" />
                             <span className="text-[#2E2E2E] text-sm font-medium">{lawyer.rating}</span>
-                            <span className="text-[#6E6E6E] text-sm">({lawyer.totalCases} cases)</span>
                           </div>
                         </div>
                       </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        lawyer.accountStatus === 'Active' 
+                          ? 'bg-[#28C76F] bg-opacity-10 text-[#28C76F]' 
+                          : 'bg-[#EA5455] bg-opacity-10 text-[#EA5455]'
+                      }`}>
+                        {lawyer.accountStatus}
+                      </span>
                     </div>
-                    
+
+                    <div className="space-y-2 mb-4">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-[#6E6E6E]">Email:</span>
+                        <span className="text-[#2E2E2E] truncate ml-2">{lawyer.email}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-[#6E6E6E]">Verification:</span>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1 ${getVerificationStatusColor(lawyer.verificationStatus)}`}>
+                          {getVerificationStatusIcon(lawyer.verificationStatus)}
+                          <span>{lawyer.verificationStatus}</span>
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-[#6E6E6E]">Appointments:</span>
+                        <span className="text-[#2E2E2E]">{lawyer.totalAppointments}</span>
+                      </div>
+                    </div>
+
                     <div className="mb-4">
-                      <p className="text-[#2E2E2E] font-medium mb-2">Specializations:</p>
-                      <div className="flex flex-wrap gap-2">
+                      <p className="text-[#6E6E6E] text-sm mb-2">Specializations:</p>
+                      <div className="flex flex-wrap gap-1">
                         {lawyer.specializations.map((spec, index) => (
                           <span key={index} className="px-2 py-1 bg-[#2C7BE5] bg-opacity-10 text-[#2C7BE5] text-xs rounded-full">
                             {spec}
                           </span>
                         ))}
-                      </div>
-                    </div>
-
-                    <div className="space-y-2 mb-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-[#6E6E6E] text-sm">Verification:</span>
-                        <div className="flex items-center space-x-1">
-                          {getVerificationIcon(lawyer.verificationStatus)}
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getVerificationBadge(lawyer.verificationStatus)}`}>
-                            {lawyer.verificationStatus}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-[#6E6E6E] text-sm">Account:</span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          lawyer.accountStatus === 'Active' 
-                            ? 'bg-[#28C76F] bg-opacity-10 text-[#28C76F]' 
-                            : 'bg-[#EA5455] bg-opacity-10 text-[#EA5455]'
-                        }`}>
-                          {lawyer.accountStatus}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-[#6E6E6E]">Experience:</span>
-                        <span className="text-[#2E2E2E]">{lawyer.experience}</span>
                       </div>
                     </div>
 
@@ -536,7 +521,7 @@ const LawyersListing = () => {
             <DialogTitle className="text-[#2E2E2E]">Confirm Action</DialogTitle>
             <DialogDescription className="text-[#6E6E6E]">
               Are you sure you want to {actionType} {selectedLawyer?.name}? 
-              {actionType === 'block' && ' They will no longer be accessible to clients.'}
+              {actionType === 'block' && ' They will no longer be able to provide legal services on the platform.'}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
